@@ -40,6 +40,9 @@ int main()
         Without using virtual destructor there will be memory leak 
         for not deleting derived destructor 
     */
+    Derived dptr;
+    cout << sizeof(dptr) << endl; 
+
     Base *bptr = new Derived();
     delete bptr;
     
