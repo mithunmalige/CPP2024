@@ -1,6 +1,6 @@
 /******************************************************************************
 Inheritance 2024
-Access specifiers : public inherited : all protected members can be accessed
+Access specifiers : private inherited : all protected members can be accessed
 *******************************************************************************/
 #include <iostream>
 using namespace std;
