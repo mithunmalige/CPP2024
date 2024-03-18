@@ -1,7 +1,7 @@
-/******************************************************************************
+/*******************************************************************************************
 Inheritance 2024
-Access specifiers : private inherited : all protected members can be accessed
-*******************************************************************************/
+Access specifiers : private inherited : only dervied class can access the base class members 
+*********************************************************************************************/
 #include <iostream>
 using namespace std;
 
