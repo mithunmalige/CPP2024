@@ -1,4 +1,4 @@
-/* Call of constructors : Example with default constructor */
+/* Call of constructors : Example with parameterized constructor */
 #include <iostream>
 using namespace std;
 
