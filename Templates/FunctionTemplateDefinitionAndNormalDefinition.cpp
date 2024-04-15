@@ -13,11 +13,13 @@ Criteria :
 template <typename T>
 void Show(T a, T b)
 {
+    cout << "I am in template based function definition" << endl;
     cout << a << " " << b << endl;
 }
 
 void Show(double a, double b)
 {
+    cout << "I am in normal function definition" << endl;
     cout << a << " " << b << endl;
 }
 
