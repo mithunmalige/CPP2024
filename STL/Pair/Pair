@@ -1,0 +1,89 @@
+// Program to explain the "pair"
+
+#include <iostream>
+using namespace std;
+
+template <typename T>
+class TestPair
+{
+public:
+    TestPair(T a, T b) :
+    p(a, b)
+    {}
+
+    TestPair& operator = (const TestPair&) = default;
+    bool operator == (const TestPair& tp)
+    {
+        if (this->p.first == tp.p.first && 
+            this->p.second == tp.p.second)
+                return true;
+        else
+                return false;
+    }
+
+    bool operator != (const TestPair& tp)
+    {
+        if (this->p.first != tp.p.first || 
+            this->p.second != tp.p.second)
+            return true;
+        else
+            return false;
+    }
+
+    void DisplayPair()
+    {
+        cout << "p.first = " << p.first << " ";
+        cout << "p.second = " << p.second << endl;
+    }
+
+private:
+    std::pair<T, T> p;
+};
+
+
+int main()
+{
+    pair<int, int> p1;
+    p1.first = 1;
+    p1.second = 10;
+
+    cout << "Pair elements : " << p1.first << " " <<
+    p1.second << endl;
+
+    pair<int, string> p2(2, "Mithun Malige");
+    cout << "Pair elements of P2 : ";
+    cout << p2.first << " " << p2.second << endl;
+
+    pair<int, char> p3 = std::make_pair<int, char>(3, 'C');
+    cout << "Pair elements of P3 : ";
+    cout << p3.first << " " << p3.second << endl;
+
+    pair<int, double> p4;
+    cout << "Pair elements of P4 : ";
+    cout << p4.first << " " << p4.second << endl;
+
+    int a;
+    int b;
+    tie(a, b) = p1;
+    cout << "Tied elements : ";
+    cout << "a = " << a << " " << "b = " << b << endl;
+    b = 9;
+    cout << "The value of b changed to 9 ";
+    cout << "Will it reflect into pair ? " << endl; 
+    cout << p1.first << " " << p1.second << endl;
+    cout << "The values are not getting reflected" << endl;
+
+    TestPair<int> t1(24, 25);
+    t1.DisplayPair();
+
+    TestPair<int> t2 = t1;
+    t2.DisplayPair();
+
+    if (t1 == t2)
+        cout << "Both t1 and t2 are same" << endl;
+
+    if (t1 != t2)
+        cout << "Both t1 and t2 are not same" << endl;
+
+    return 0;   
+}
