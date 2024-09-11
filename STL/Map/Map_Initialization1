@@ -1,0 +1,23 @@
+#include <iostream>
+#include <vector>
+#include <map>
+using namespace std;
+
+int main()
+{
+    std::map<std::string, int> map1;
+
+    map1["Mithun"] = 1; // stores bottom
+    map1["Malige"] = 2; //stores top
+
+    std::map<std::string, int>::iterator map_iter = map1.begin();
+    while(map_iter != map1.end())
+    {
+        cout << "Key : " << map_iter->first << ":" 
+         << map_iter->second << endl;
+
+        map_iter++; 
+    }
+
+    return 0;
+}
