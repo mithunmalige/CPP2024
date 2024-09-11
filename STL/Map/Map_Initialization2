@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+#include <map>
+using namespace std;
+
+int main()
+{
+    std::map<std::string, int> map1;
+
+    map1["Mithun"] = 1; // stores bottom
+    map1["Malige"] = 2; //stores top
+
+    std::map<std::string, int>::iterator map_iter = map1.begin();
+    while(map_iter != map1.end())
+    {
+        cout << "Key : " << map_iter->first << ":" 
+         << map_iter->second << endl;
+
+        map_iter++; 
+    }
+
+    // size of the map.
+    cout << "The size of map : " << map1.size() << endl; 
+
+    // max_size of the map.
+    cout << "The max size of the map : " << map1.max_size() << endl;
+
+    if (map1.empty())
+        cout << "The map is empty" << endl;
+    else
+        cout << "The map is not empty" << endl;
+
+    map1.erase("Malige");
+    cout << "The size of the map after removal : " << map1.size() << endl;
+
+    std::map<std::string, int>::iterator iter = map1.begin();
+    map1.erase(iter);
+    cout << "The size of the map after removal : " << map1.size() << endl;
+
+    // clears all the elements even if it is empty without any compilation errros.
+    map1.clear();
+
+    return 0;
+}
