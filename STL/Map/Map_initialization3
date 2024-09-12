@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <map>
+using namespace std;
+
+int main()
+{
+    auto print = [](std::map<int, string>& myMap)
+    {
+        for (auto& m : myMap)
+        {
+              cout << m.first << ":" << m.second << endl;   
+        }
+    };
+
+    std::map<int, string> myMap;
+
+    myMap.insert(pair<int, string>(1, "Mithun"));
+    myMap.insert(pair<int, string>(5, "Malige"));
+    myMap.insert(pair<int, string>(3, "Chandra")); //first will be considered.
+    myMap.insert(pair<int, string>(18, "Lokana"));
+    myMap.insert(pair<int, string>(20, "Neel")); // rejected due to second entry.
+    print(myMap);
+
+    std::map<int, string> myMap2(myMap.rbegin(), myMap.rend());
+    print(myMap2);
+
+    myMap.erase(myMap.begin());
+    print(myMap);
+
+    if(myMap.count(4))
+        cout << "Count 4 is available" << endl;
+    else
+        cout << "Count 4 is not available" << endl;
+
+    cout << "Lower bound and Upper bound" << endl;
+    cout << myMap.lower_bound(6)->first << ":" <<
+        myMap.lower_bound(6)->second << endl;
+
+    cout << myMap.upper_bound(6)->first << ":" <<
+        myMap.upper_bound(6)->second << endl;
+
+    
+    return 0;
+}
