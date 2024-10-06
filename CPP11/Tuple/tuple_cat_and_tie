@@ -1,0 +1,43 @@
+// std::tuple tie.
+#include <iostream>
+#include <tuple>
+using namespace std;
+
+int main()
+{
+    auto print = [](std::tuple<int, char, float>& myTuple)
+    {
+        cout << get<0>(myTuple) << " ";
+        cout << get<1>(myTuple) << " ";
+        cout << get<2>(myTuple) << endl;
+    };
+
+    
+    tuple<int, char, float> tup1;
+    tup1 = make_tuple(1, 'g', 5.6);
+    print(tup1);
+
+    // use tie and unpack completely.
+    int i;
+    char c;
+    float f;
+    tie(i, c, f) = tup1;
+    cout << i << " " << c << " " << f << endl;
+
+    // ignore in tie.
+    int ob;
+    float fb;
+    tie(ob,ignore, fb) = tup1;
+    cout << ob << " " << fb << endl;
+
+    tuple<int, char, float> tup2 = tup1;
+    get<0>(tup2) = 56;
+    get<1>(tup2) = 'z';
+
+    auto tup3 = tuple_cat(tup1, tup2);
+
+    cout << "The size of tuple : ";
+    cout << tuple_size<decltype(tup3)>::value << endl;
+
+    return 0;
+}
