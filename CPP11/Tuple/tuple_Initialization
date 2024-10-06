@@ -1,0 +1,19 @@
+// std::tuple initialization.
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    tuple<int, char, float> tup1;
+    tup1 = make_tuple(1, 'g', 5.6);
+
+    cout << get<0>(tup1) << endl;
+
+    tuple<int, char, float> tup2 = tup1;
+    cout << get<1>(tup2) << endl;
+
+    tuple<int, char, float> tup3 = {1, 'g', 5.6};
+    cout << get<2>(tup3) << endl;
+
+    return 0;
+}
