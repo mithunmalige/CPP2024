@@ -1,0 +1,37 @@
+// std::tuple swap.
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    auto print = [](std::tuple<int, char, float>& myTuple)
+    {
+        cout << get<0>(myTuple) << " ";
+        cout << get<1>(myTuple) << " ";
+        cout << get<2>(myTuple) << endl;
+    };
+
+    
+    tuple<int, char, float> tup1;
+    tup1 = make_tuple(1, 'g', 5.6);
+    cout << "Before swap tup1 :" ;
+    print(tup1);
+
+
+    tuple<int, char, float> tup2 = make_tuple(2, 'n', 6.7);
+    cout << "Before swap tup2 :" ;
+    print(tup2);
+
+    tup2.swap(tup1);
+    cout << "After swap tup1 :" ;
+    print(tup1);
+
+    cout << "After swap tup2 :" ;
+    print(tup2);
+
+    // cannot bind l-value reference type
+    // tuple<int, float, char> tup3 = {1, 2.3, 'f'};
+    // tup3.swap(tup1);
+
+    return 0;
+}
