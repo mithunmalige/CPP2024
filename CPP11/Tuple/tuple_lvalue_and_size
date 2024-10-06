@@ -1,0 +1,30 @@
+// std::tuple modify l-value.
+#include <iostream>
+#include <tuple>
+using namespace std;
+
+int main()
+{
+    auto print = [](std::tuple<int, char, float>& myTuple)
+    {
+        cout << get<0>(myTuple) << " ";
+        cout << get<1>(myTuple) << " ";
+        cout << get<2>(myTuple) << endl;
+    };
+
+    
+    tuple<int, char, float> tup1;
+    tup1 = make_tuple(1, 'g', 5.6);
+    print(tup1);
+
+    cout << "Modifying values as below :" << endl;
+    get<0>(tup1) = 2;
+    get<1>(tup1) = 'h';
+    get<2>(tup1) = 9.8;
+    print(tup1);
+
+    cout << "The size of tuple : ";
+    cout << tuple_size<decltype(tup1)>::value << endl;
+
+    return 0;
+}
