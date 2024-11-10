@@ -1,0 +1,75 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <unordered_map>
+#include <algorithm>
+
+using namespace std;
+
+void FilterSentence(std::string& sentence)
+{
+    std::string filteredSentence;
+    for (char c : filteredSentence)
+    {
+        if (isalpha(c) || isspace(c))
+        {
+            filteredSentence += tolower(c);
+        }
+    }
+}
+
+void SortString(std::string& sentence)
+{
+    std::sort(sentence.begin(), sentence.end());
+}
+
+void FindAnagrams(std::string sentence)
+{
+    // Filter sentence
+    FilterSentence(sentence);
+
+    // remove space and sort/store into vector.
+    std::vector<std::string> words;
+    while (sentence.find(' ') != std::string::npos)
+    {
+        auto pos = sentence.find(' ');
+        std::string subString = sentence.substr(0, pos);
+        words.push_back(subString);
+        cout << subString << endl;
+        sentence.erase(0, pos+1);
+    }
+    words.push_back(sentence);
+
+    // sort into signature and store the words.
+    std::unordered_map<std::string, std::vector<std::string>> anagrams;
+    for (auto word : words)
+    {
+        std::string signature = word;
+        SortString(signature);
+        anagrams[signature].push_back(word);
+    }
+
+    // print the anagrams.
+    for (auto pair : anagrams)
+    {
+        if (pair.second.size() > 1)
+        {
+            std::cout << "Anagrams are : " ;
+            for (auto anaWord : pair.second)
+            {
+                 std::cout << " " << anaWord; 
+            }
+        }
+        std::cout << std::endl;
+    }
+}
+
+int main()
+{
+    std::string sentence;
+    std::getline(std::cin, sentence);
+
+    FindAnagrams(sentence);
+
+    return 0;
+}
