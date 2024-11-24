@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+class Base
+{
+    private:
+    virtual void Fun() // address : 300
+    {
+        cout << "Fun in Base" << endl;
+    }
+
+    public:
+    virtual void FunP()
+    {
+        Fun();
+    }
+};
+
+class Derived : public Base
+{
+    private:
+    void Fun()     // address : 400
+    {
+        cout << "Fun in Dervied" << endl;
+    }
+
+    public:
+    virtual void FunD()
+    {
+        cout << "FunD" << endl;
+    }
+};
+
+int main()
+{
+    Derived dobj;
+    Base* bptr = &dobj;
+
+    bptr->FunP();
+    return 0;
+}
