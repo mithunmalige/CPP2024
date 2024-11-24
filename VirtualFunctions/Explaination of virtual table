@@ -1,0 +1,21 @@
+class Base
+{
+  public:
+  virtual void abc();     // address : 300
+  virtual void jkf();     // address : 400
+};
+
+
+class Derived : public Base
+{
+ public:
+ void jkf();             // address : 500
+ virtual void pqr();     // address : 600
+};
+
+int main()
+{
+  Derived dobj;         // vtable : compile time : 500, 600. vptr pointing to vtable of Derived.
+  Base* bptr = &dobj;   // vtable : compile time : 300, 500(since usage of virtual keyword). vptr pointing to vtable of Base.
+
+}
