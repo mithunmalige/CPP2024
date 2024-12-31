@@ -1,0 +1,264 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+class Custom
+{
+    public:
+    Custom(int a_, int b_):
+        a(a_), 
+        b(b_)
+    {}
+
+    Custom() = default;
+
+    int GetA() const
+    {
+        return a;
+    }
+
+    int GetB() const
+    {
+        return b;
+    }
+
+    private:
+    int a;
+    int b;
+};
+
+struct Person
+{
+    int age;
+    string name;
+};
+
+int main()
+{
+    auto print = [](std::vector<int>& v)
+    {
+        for(auto val : v)
+            cout << val << " ";
+
+        cout << endl;
+    };
+
+    auto printaddress = [](std::vector<int>& v)
+    {
+        for(int i = 0; i < v.size(); i++)
+            cout << &v[i] << endl;
+    };
+
+    auto prints = [](std::vector<string>& v)
+    {
+        for(auto val : v)
+            cout << val << " ";
+
+        cout << endl;
+    };
+
+    vector<int> vec1 = {1, 2, 3, 4, 5};
+    print(vec1);
+
+    vector<int> vec2(5, 10);
+    print(vec2);
+
+    cout << vec2[3] << endl;
+    
+    vec2[3] = 15;
+    print(vec2);
+
+    // How do you insert an element at a specific position in a vector?
+    vec2.insert(vec2.begin() + 3, 17);
+    print(vec2);
+
+    // How do you delete an element from a vector?
+    vec2.erase(vec2.begin() + 3);
+    print(vec2);
+
+    // How do you find the size of a vector?
+    cout << vec2.size() << endl;
+
+    // How do you check if a vector is empty?
+    cout << vec2.empty() << endl;
+
+    // How do you declare an iterator for a vector?
+    std::vector<int>::iterator itr = vec2.begin();
+    std::vector<int>::reverse_iterator r_itr = vec2.rbegin();
+    std::vector<int>::const_iterator c_itr = vec2.begin();
+    std::vector<int>::const_reverse_iterator cr_itr = vec2.rbegin();
+
+    // How do you use an iterator to traverse a vector?
+    for(itr; itr != vec2.end(); itr++)
+    {
+        cout << *itr << " ";
+    }
+    cout << endl;
+
+    // How do you use an iterator to modify elements in a vector?
+    itr = vec2.begin() + 3;
+    cout << *itr << endl;
+    *itr = 10;
+    cout << *itr << endl;
+
+    // How do you sort a vector in ascending order?
+    sort(vec1.begin(), vec1.end());
+    print(vec1);
+
+    // How do you sort a vector in descending order?
+    sort(vec1.begin(), vec1.end(), [](int a, int b)
+    { 
+       return b < a;
+    });
+    print(vec1);
+
+    // How do you find the minimum element in a vector?
+    auto min = *std::min_element(vec1.begin(), vec1.end());
+    cout << min << endl;
+
+    // How do you find the maximum element in a vector?
+    auto max = *std::max_element(vec1.begin(), vec1.end());
+    cout << max << endl;
+
+    // How do you reverse a vector?
+    std::reverse(vec1.begin(), vec1.end());
+    print(vec1);
+
+    // How do you use std::vector with custom classes?
+    std::vector<Custom> vec3 = {Custom(1, 2), Custom(2, 3), Custom(4, 5)};
+    for (auto& v : vec3)
+    {
+        cout << v.GetA() << " " << v.GetB() << endl;
+    } // can use push_back also.
+        
+    // How do you use std::vector with pointers?
+    std::vector<Custom*> vec4 = {new Custom(1,2), new Custom(2, 3), new Custom(4, 5)};
+    for (auto& v : vec4)
+    {
+        cout << v->GetA() << " " << v->GetB() << endl;
+    } // can use push_back also.
+
+    // How do you handle vector exceptions?
+    std::vector<int> vec5 = {1,2,3,4,5};
+    try
+    {
+        int v = vec5.at(6);
+    }
+    catch(std::out_of_range& e)
+    {
+        cout << "Exception thrown " << e.what() << endl;
+    }
+
+    // Write a C++ program to sort a vector of strings in alphabetical order.
+    std::vector<std::string> vec6 = {"mithun", "malige", "chandra", "neel"};
+    std::sort(vec6.begin(), vec6.end());
+    prints(vec6);
+
+    // Write a C++ program to find the maximum and minimum elements in a vector of doubles.
+    std::vector<double> vec7 = {1.6, 3.4, 6.7, 9.8};
+    auto mini = *std::min_element(vec7.begin(), vec7.end());
+    cout << mini << endl;
+
+    auto maxi = *std::max_element(vec7.begin(), vec7.end());
+    cout << maxi << endl;
+
+    // How do you swap two vectors in C++?
+    std::vector<int> vec8 = {2, 6, 8, 7, 8};
+    std::vector<int> vec9 = {1, 2, 4};
+
+    vec8.swap(vec9);
+    print(vec8);
+    print(vec9);
+
+    // How do you assign one vector to another in C++?
+    std::vector<int> vec10 = vec9;
+    print(vec10);
+    printaddress(vec9); // two different addresses.
+    printaddress(vec10);
+
+    // How do you check if two vectors are equal in C++?
+    if (vec10 == vec9)
+    {
+        cout << "Same" << endl;
+    }
+    else
+    {
+        cout << "Vectors are different" << endl;
+    }
+
+    bool isSame = std::equal(vec9.begin(), vec9.end(), vec10.begin());
+    cout << isSame << endl;
+
+    // How do you find the first occurrence of an element in a vector?
+    auto it = std::find(vec9.begin(), vec9.end(), 8);
+    if (it != vec9.end())
+    {
+        cout << "First occurence of 8 index is " << std::distance(vec9.begin(), it) << endl;
+    }
+
+    // How do you find the last occurrence of an element in a vector?
+    auto r_it = std::find(vec9.rbegin(), vec9.rend(), 8);
+    if (r_it != vec9.rend())
+    {
+        cout << "Last occurrence of 8 index is " << vec9.size() - 1 - std::distance(vec9.rbegin(), r_it) << endl;
+    }
+
+    // How do you sort a vector of structures in C++?
+    Person p1, p2;
+    p1.age = 30;
+    p1.name = "Mithun";
+
+    p2.age = 1;
+    p2.name = "Neel";
+
+    std::vector<Person> personVector = {p1, p2};
+    std::sort(personVector.begin(), personVector.end(), [](const Person& a, const Person& b)
+    {
+        return a.age < b.age;
+    });
+
+    for (auto& p : personVector)
+        cout << p.name << endl; 
+
+    // How do you find the maximum element in a vector of pairs?
+    std::vector<std::pair<int, string>> vecPair;
+    vecPair.push_back(std::pair<int, string>(31, "Mithun"));
+    vecPair.push_back(std::pair<int, string>(1, "Neel"));
+    
+    std::sort(vecPair.begin(), vecPair.end(), [](const std::pair<int, string>& a, const std::pair<int, string>& b)
+    {
+        return a.first < b.first;      
+    });
+    
+    for (auto& p : vecPair)
+        cout << p.second << endl; 
+
+    // How do you find the maximum element in a vector of pairs?
+    auto maxim = *std::max_element(vecPair.begin(), vecPair.end());
+    cout << maxim.first << endl;
+
+    // How do you find the minimum element in a vector of tuples?
+    std::vector<std::tuple<int, double, string>> vecTuple;
+    vecTuple.push_back(std::make_tuple(3, 3.4, "Mithun"));
+    vecTuple.push_back(std::make_tuple(2, 4.3, "Malige"));
+    vecTuple.push_back(std::make_tuple(1, 1.9, "Neel"));
+
+    auto minim = *std::min_element(vecTuple.begin(), vecTuple.end(), [](const std::tuple<int, double, string>& a,
+    const std::tuple<int, double, string>& b)
+    {
+        return (std::get<1>(a) < std::get<1>(b));        
+    });
+    cout << std::get<2>(minim) << endl;
+
+    // How do you reverse a vector of strings?
+    std::vector<std::string> vecStrings = {"Neel", "is", "son", "of", "Mithun"};
+    std::reverse(vecStrings.begin(), vecStrings.end());
+    for (auto& v : vecStrings)
+        cout << v << " ";
+    cout << endl;
+
+    
+    return 0;
+}
