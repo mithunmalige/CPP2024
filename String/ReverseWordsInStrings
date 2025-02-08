@@ -1,0 +1,34 @@
+/* Reverse the words in a string */ 
+
+#include <iostream>
+#include <stack>
+#include <string>
+#include <sstream>
+
+using namespace std;
+
+int main()
+{
+    string str("Today is Monday and Mithun is at home");
+    
+    stack<string> myStack;
+    std::stringstream ss(str);
+    std::string word;
+
+    while(getline(ss, word, ' '))
+    {
+        if (!word.empty())
+            myStack.push(word);
+    }
+
+    str.clear();
+    while(myStack.size())
+    {
+        str += myStack.top();
+        str.append(" ");
+        myStack.pop();
+    }
+
+    cout << str << endl;
+    return 0;
+}
