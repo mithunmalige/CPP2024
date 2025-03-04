@@ -1,43 +1,50 @@
 #include <iostream>
-#include <mutex>
 #include <thread>
+#include <mutex>
+#include <condition_variable>
 
+#define LIMIT 20
+int count = 1;
 using namespace std;
 
 std::mutex mtx;
-void PrintOddNumbers(int maxValue)
+std::condition_variable cv;
+
+void EvenThread()
 {
-    std::lock_guard<mutex> lock(mtx);
-    cout << "Printing Odd numbers" << endl;
-    for (int i = 0; i < maxValue; i++)
+    while (count < LIMIT)
     {
-        if (i % 2 == 1)
-            cout << i << " ";
+        std::unique_lock<std::mutex> lck(mtx);
+        cv.wait(lck, [](){ return (count % 2 == 0); }); // if true returns then waits
+        cout << "Even : " << count << endl;
+        count++;
+
+        cv.notify_one();      
     }
-    cout << endl;
+    
 }
 
-void PrintEvenNumbers(int maxValue)
+void OddThread()
 {
-    std::lock_guard<mutex> lock(mtx);
-    cout << "Printing even numbers" << endl;
-    for (int i = 0; i < maxValue; i++)
+    while (count < LIMIT)
     {
-        if(i % 2 == 0)
-            cout << i << " ";
+        std::unique_lock<std::mutex> lck(mtx);
+        cv.wait(lck, [](){ return (count % 2 != 0); }); // if true returns then waits
+        cout << "Odd : " << count << endl;
+        count++;
+
+        cv.notify_one();
     }
-    cout << endl;
 }
+
 
 int main()
 {
-    cout << "Printing the numbers from 1 to 100" << endl;
-    std::thread t1(PrintOddNumbers, 100);
-    std::thread t2(PrintEvenNumbers, 100);
+    std::thread t1(&EvenThread);
+    std::thread t2(&OddThread);
 
     t1.join();
     t2.join();
 
     return 0;
-
 }
