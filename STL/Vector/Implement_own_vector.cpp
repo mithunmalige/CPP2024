@@ -99,7 +99,6 @@ class MyVector
         if (size == capacity)
         {
             capacity = (capacity == 0) ? 1 : capacity * 2;
-            this->data = new T[capacity];
 
             T* newData = new T[capacity];
             for (int i = 0; i < size; i++)
@@ -119,7 +118,6 @@ class MyVector
         if (size == capacity)
         {
             capacity = (capacity == 0) ? 1 : capacity * 2;
-            this->data = new T[capacity];
 
             T* newData = new T[capacity];
             for (int i = 0; i < size; i++)
