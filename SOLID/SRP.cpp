@@ -1,73 +1,59 @@
-/* Single responsibility principle(SRP) */
-
 #include <iostream>
 using namespace std;
-
-class User
-{
-    /* Violates the SRP becuase it contains the user data and 
-     saves it to database and sends the email as well */
-    public:
-    void SaveToDataBase()
-    {
-
-    }
-
-    void SaveEmail()
-    {
-
-    }
-
-    private:
-    std::string username_;
-    std::string email_;
-};
 
 class UserData
 {
     public:
+    UserData(const std::string& name_, const std::string& email_):
+        userName_(name_),
+        userEmail_(email_)
+    {}
+
     std::string GetUserName() const
     {
-        return username_;
+        return userName_;
     }
 
-    std::string GetEmailService() const 
+    std::string GetEmail() const
     {
-        return email_;
+        return userEmail_;
     }
 
-    private:
-    std::string username_;
-    std::string email_;
+    std::string userName_;
+    std::string userEmail_;
 };
 
-class UserEmail
+/* Single responsibility */
+class SaveToDataBase
 {
     public:
-    void Save(UserData& ud) const
+    void SaveTheData(UserData& ud)
     {
-
+        cout << "Saved to user data to Database for the user name : "
+        << ud.GetUserName() << endl;
     }
 };
 
-class UserDataBase
+/* Single responsibility */
+class SendEmail
 {
     public:
-    void SendEmail(UserData& ud, const std::string& ref_) const
+    void SendTheEmail(UserData& ud)
     {
-
+        cout << "Sent an email to " << ud.GetEmail() << endl;
     }
 };
 
 int main()
 {
-    UserData ud;
+    UserData ud("Mithun Malige", "mithunmalige@gmail.com");
+    
+    SaveToDataBase sDB;
+    sDB.SaveTheData(ud);
 
-    UserEmail ue;
-    ue.Save(ud);
-
-    UserDataBase ub;
-    ub.SendEmail(ud, "Mithun");
+    SendEmail sEmail;
+    sEmail.SendTheEmail(ud);
 
     return 0;
 }
+
