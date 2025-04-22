@@ -1,60 +1,62 @@
-/* open-close principle */
-/* 1. opened for extension and 2. closed for modification */
-
+/* OCP */
 #include <iostream>
 #include <memory>
 using namespace std;
 
-class Shape 
+class Notification // closed for modification.
 {
-    /* Violates the OCP */
-    private:
-    enum myShape {CIRCLE, TRIANGLE};
-
     public:
-    void CalculateArea(std::shared_ptr<Shape>& shape)
-    {
+    virtual ~Notification() = default;
+    virtual void Notify() = 0;
+};
 
+// open for extension
+class PushNotification : public Notification
+{
+    public:
+    void Notify()
+    {
+        cout << "Send push notification" << endl;
     }
 };
 
-/* With OCP */
-class MyShape
+class SMSNotification : public Notification
 {
     public:
-    virtual void SelectShape() = 0; 
-};
-
-class Circle : public MyShape
-{
-    public:
-    void SelectShape()
+    void Notify()
     {
-
+        cout << "Send SMS notification" << endl;
     }
 };
 
-class Triangle : public MyShape
+class EmailNotification : public Notification
 {
     public:
-    void SelectShape()
+    void Notify()
     {
-
+        cout << "Send email notification" << endl;
     }
 };
 
-class CalculateArea
+class NotificationSender
 {
     public:
-    void calculateArea(std::shared_ptr<MyShape> myShape)
+    NotificationSender() = default;
+    void SendNotifications(const std::string& message, const std::string receipient,
+        const std::shared_ptr<Notification>& notifier_)
     {
-
+        notifier_->Notify();
     }
 };
+
 
 int main()
 {
-    
-    return 0; 
-}
+    auto pushNotifier = std::make_shared<PushNotification>();
+    auto smsNotifier = std::make_shared<SMSNotification>();
+    NotificationSender ns;
+    ns.SendNotifications("Mithun Malige", "mithunmalige@gmail.com", pushNotifier);
+    ns.SendNotifications("Mithun Malige", "mithunmalige@gmail.com", smsNotifier);
 
+    return 0;
+}
